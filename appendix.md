@@ -896,7 +896,7 @@ Space = `O(n)`
 
 ```python
 def pre_order(node):
-  yield node
+  yield node  # move line down for pre-order -> in-order -> post-order
   if node.left: yield from pre_order(node.left)
   if node.right: yield from pre_order(node.right)
 ```
