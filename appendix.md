@@ -12,6 +12,8 @@
 
 [Reservoir Sampling](#reservoir-sampling)
 
+[Factorization](#factorization)
+
 ### Sorting
 
 [Binary Search](#binary-search)
@@ -35,6 +37,8 @@
 [Cyclic Sort](#cyclic-sort)
 
 ### Graphs
+
+[Floyd Cycle Detection](#floyd-cycle-detection)
 
 [Topological Ordering](#topological-ordering)
 
@@ -63,8 +67,6 @@
 [Recursive DFS Pre-Order Traversal](#recursive-dfs-pre-order-traversal)
 
 [Iterative DFS Pre-Order Traversal](#iterative-dfs-pre-order-traversal)
-
-[Iterative DFS In-Order Traversal](#iterative-dfs-in-order-traversal)
 
 [Iterative DFS In-Order Traversal](#iterative-dfs-in-order-traversal)
 
@@ -432,6 +434,42 @@ def cyclic_sort(nums):
 
 ## Graphs
 
+### Floyd Cycle Detection
+
+<img src="./assets/floyd_cycle.png" width="300">
+
+Time = `O(n)`
+
+Space = `O(1)`
+
+```python
+def iter_linked_list(node):
+  while node:
+    yield node
+    node = node.next
+
+def find_cycle_start(
+  head: Optional['Node']
+) -> Optional['Node']:
+  fast_iter = iter_linked_list(head)
+  slow_iter = iter_linked_list(head)
+  while True:
+    try:
+      next(fast_iter)
+      fast = next(fast_iter)
+    except StopIteration:
+      return None
+    slow = next(slow_iter)
+    if slow == fast:
+      break
+  
+  find_iter = iter_linked_list(head)
+  while True:
+    find = next(find_iter)
+    slow = next(slow_iter)
+    if slow == find:
+      return find
+```
 
 ### Topological Ordering
 
@@ -896,7 +934,7 @@ Space = `O(n)`
 
 ```python
 def pre_order(node):
-  yield node  # move line down for pre-order -> in-order -> post-order
+  yield node
   if node.left: yield from pre_order(node.left)
   if node.right: yield from pre_order(node.right)
 ```
